@@ -64,41 +64,23 @@ void Profiler::Exit() {
 
     std::ofstream logFile("ProfileReport.csv");
 
-    logFile << "Function, Hit Count, Percentage, Time(ms), Index\n";
+    logFile << "Function,Hit Count,Percentage,Time(ms)\n";
 
-    //const size_t size = samples.size();
-    const size_t s = SampleVector.size();
-	if(s > 0)
+    const size_t size = samples.size();
+	if(size > 0)
 	{
-		for(const auto& v : SampleVector)
+		for(const auto& data : samples)
 		{
-			for(const auto& data : v)
-			{
-                std::string name = data.second.SymbolName_;
-                std::string::iterator end_pos = std::remove(name.begin(), name.end(), ',');
-                name.erase(end_pos, name.end());
-                logFile << name << ",";
-                unsigned hitCount = data.second.HitCount_;
-                logFile << hitCount << ",";
-                logFile << (double)hitCount / (double)MAXSAMPLENUM * 100.0 << ",";
-                logFile << data.second.TimeDuration_ << ",";
-                logFile << data.second.index_ << '\n';
-			}
-            logFile << "-------------------------\n";
-		}
-	}
-    /*if (size > 0)
-    {
-        for (const auto& data : samples)
-        {
-            logFile << data.second.SymbolName_ << ",";
+            std::string name = data.second.SymbolName_;
+            std::string::iterator end_pos = std::remove(name.begin(), name.end(), ',');
+            name.erase(end_pos, name.end());
+            logFile << name << ",";
             unsigned hitCount = data.second.HitCount_;
             logFile << hitCount << ",";
             logFile << (double)hitCount / (double)MAXSAMPLENUM * 100.0 << ",";
-            logFile << data.second.TimeDuration_ << ",";
-            logFile << data.second.index_ << '\n';
-        }
-    }*/
+            logFile << data.second.TimeDuration_ << '\n';
+		}
+	}
 
     logFile.close();
 }
@@ -108,10 +90,6 @@ void Profiler::Sample() {
     while (SampleNumber_ < MAXSAMPLENUM)
     {
         auto startTime = std::chrono::high_resolution_clock::now();
-        auto timerEnd = std::chrono::high_resolution_clock::now();
-        timer = std::chrono::duration_cast<std::chrono::seconds>(timerEnd - timerStart).count();
-
-        
 
         MainThread_ = OpenThread(
             THREAD_SUSPEND_RESUME |
@@ -156,29 +134,14 @@ void Profiler::Sample() {
 
         const PSYMBOL_INFO symbols = GetSymbol(context.Rip, (PSYMBOL_INFO)buff);
 
-        /*for(int32_t count{1};;count++)
-        {
-	        if(!count%5)
-	        {
-		        
-	        }
-        }*/
-        if (tempTimer != timer)
-        {
-            tempTimer = timer;
-            std::cout << tempTimer << std::endl;
-            SampleVector.push_back(samples);
-            samples.clear();
-        }
-
         ++samples[symbols->Address].HitCount_;
         samples[symbols->Address].Addr_ = symbols->Address;
         samples[symbols->Address].SymbolName_ = symbols->Name;
         samples[symbols->Address].TimeDuration_ += std::chrono::duration< double, std::milli >(endTime - startTime).count();
-        samples[symbols->Address].index_ = symbols->TypeIndex;
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
         ++SampleNumber_;
     }
+    std::cout << "Sampling Done!\n";
 }

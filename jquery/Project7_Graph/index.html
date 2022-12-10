@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <title>Software Visualization - Project 7 - CS399 Data Visualization</title>
+        <!-- Bootstrap Core CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- jQuery UI CSS -->
+        <link rel="stylesheet" href="css/jquery-ui.min.css">
+        <link rel="stylesheet" href="css/jquery-ui.structure.min.css">
+        <link rel="stylesheet" href="css/jquery-ui.theme.min.css">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-custom">
+            <div class="container">
+                <h1> Profiler Visualization</h1> 
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            Elliott Hong, Uijin Lee, Hagyeong Kim
+                        </a>
+                    </li>
+                    <!--<li class="nav-item">
+                        <a class="nav-link" href="#"></a>
+                    </li>-->
+                </ul>    
+            </div>
+        </nav>
+
+        <!-- Bootstrap grid setup -->
+        <div class="container">
+            <div id="selections" class="row">
+                <div class="form-group">
+                    <label for="formControlRange">Number of Functions: </label>
+                    <input id="numFuncsFromGUILabel" type="text" size="5"/>
+                    <input type="range" class="form-control-range" name="numFuncsFromGUI" id="numFuncsFromGUI" min="4" max="10" value="4" onmousemove="printValue('numFuncsFromGUI','numFuncsFromGUILabel')">
+                </div>
+                <select id="selectButton"></select>
+            </div>
+            <div class="row">
+                <div id="chart-area"></div>  
+            </div>
+        </div>
+
+    <!-- External JS libraries -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/d3.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <script>
+        function printValue(sliderID, textbox) {
+            var x = document.getElementById(textbox);
+            var y = document.getElementById(sliderID);
+            x.value = y.value;
+        }
+        window.onload = function() {
+            printValue('numFuncsFromGUI','numFuncsFromGUILabel');
+        }
+    </script>
+    </body>
+</html>
+
+
+<!--https://stackoverflow.com/questions/45887833/d3-chart-is-not-displaying-->
