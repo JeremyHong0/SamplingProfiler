@@ -12,7 +12,7 @@
 
 #pragma comment( lib, "dbghelp" )
 
-#define MAXSAMPLENUM 10000
+#define MAXSAMPLENUM 30000
 
 HANDLE Profiler::MainThread_;
 DWORD Profiler::MainThreadId_;
@@ -64,7 +64,7 @@ void Profiler::Exit() {
 
     std::ofstream logFile("ProfileReport.csv");
 
-    logFile << "Function,Hit Count,Percentage,Time(ms)\n";
+    logFile << "Function,HitCount,Percentage,Time(ms)\n";
 
     const size_t size = samples.size();
 	if(size > 0)
@@ -72,6 +72,8 @@ void Profiler::Exit() {
 		for(const auto& data : samples)
 		{
             std::string name = data.second.SymbolName_;
+            if (name.empty() || name.find(':') == std::string::npos)
+                continue;
             std::string::iterator end_pos = std::remove(name.begin(), name.end(), ',');
             name.erase(end_pos, name.end());
             logFile << name << ",";
