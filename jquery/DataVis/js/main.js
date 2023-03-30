@@ -14,14 +14,15 @@ const svg = d3.select("#chart-area")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Parse the Data
-d3.csv(fileName).then ( function(data) {
+d3.csv(fileName).then (function(data) {
 
   // sort data
   data.sort(function(b, a) {
     return +a.HitCount - +b.HitCount;
-  });
+  }).slice(0, 10);
+  console.log(data);
 
-  data.filter(function(d,i){ return i < 10 });
+  data.filter(function(d,i){ return i > 10 });
 
   // X axis
   const x = d3.scaleBand()
@@ -37,7 +38,7 @@ d3.csv(fileName).then ( function(data) {
 
   // Add Y axis
   var domainY = data[0].HitCount;
-  console.log(domainY);
+  //console.log(domainY);
 
   const y = d3.scaleLinear()
     .domain([0, domainY])

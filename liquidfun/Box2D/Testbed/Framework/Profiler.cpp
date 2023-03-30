@@ -12,7 +12,7 @@
 
 #pragma comment( lib, "dbghelp" )
 
-#define MAXSAMPLENUM 30000
+#define MAXSAMPLENUM 5000
 
 HANDLE Profiler::MainThread_;
 DWORD Profiler::MainThreadId_;
@@ -61,6 +61,9 @@ void Profiler::Start() {
 }
 
 void Profiler::Exit() {
+
+	if(WorkerThread_ != nullptr)
+		WorkerThread_->~thread();
 
     std::ofstream logFile("ProfileReport.csv");
 
@@ -146,4 +149,6 @@ void Profiler::Sample() {
         ++SampleNumber_;
     }
     std::cout << "Sampling Done!\n";
+    WorkerThread_->~thread();
+
 }
