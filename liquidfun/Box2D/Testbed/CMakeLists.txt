@@ -7,8 +7,8 @@ set(Testbed_Framework_SRCS
 	Framework/Main.cpp
 	Framework/Main.h
 	# [CS315] uncomment the next lines to add these files to our CMake project
-	Framework/Profiler.cpp
-	Framework/Profiler.h
+	#Framework/Profiler.cpp
+	#Framework/Profiler.h
 	Framework/Helper.cpp
 	Framework/Helper.h
 	Framework/Render.cpp
