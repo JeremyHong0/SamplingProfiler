@@ -8,7 +8,7 @@
 - When program starts to run, it tracks each thread and check which functions are called. In `Sample()` function, it checks each worker thread to log functions that it used that thread.
    
 ### Requirements  
-- Before the main loop of program, it should call `Profiler::Init()` and `Profiler::Start()`. After main loop of program, it should call `Profiler::Exit()` to print `ProfileReport.csv` file. It is able to modify number of sampling time at `Profiler.cpp` with modifing `MAXSAMPLENUM`.
+- Before the main loop of program, it should call `Profiler::Init()` and `Profiler::Start()`. After main loop of program, it should call `Profiler::Exit()` to print `ProfileReport.csv` file. It is able to modify number of sampling time at `Profiler-mswin.cpp` with modifing `MAXSAMPLENUM`.
 
 
 </br>  

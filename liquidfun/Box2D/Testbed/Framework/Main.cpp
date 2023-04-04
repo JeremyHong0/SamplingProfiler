@@ -53,10 +53,16 @@
 #include <thread>
 #include <iostream>
 
+#include "CrashHandler.h"
 #include "Profiler.h"          /* static include file, non-library, in Testbed/Framework/Profiler.h and Profiler.cpp                       */
 #if defined (PROFILER_LIBS)
 #include "include/Profiler.h"  /* library (dynamic or static) include file ../../Profiler/include/Profiler.h and Profiler/src/Profiler.cpp */
 #endif
+
+#if defined(_MSV_VER)
+#include "CrashHandler.h"
+#endif
+
 
 #define UNUSED(expr) do { (void)(expr); } while (0)
 
@@ -835,11 +841,20 @@ using namespace TestMain;
 // ======== Any changes you need to make should go in this function ===============
 static void Run()
 {
+#if defined(_MSC_VER)
+	CrashHandler::catchStackOverflow();
+	SetUnhandledExceptionFilter(CrashHandler::WriteDump);
+#endif
+
 	Profiler::Init();
 
 	Profiler::Start();
 
 	RunMainLoop();
+
+	std::vector<int> a(1);
+
+	a[2] = 10;
 
 	Profiler::Exit();
 }

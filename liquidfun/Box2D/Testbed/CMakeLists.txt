@@ -21,6 +21,10 @@ set(Testbed_Framework_SRCS
 	Framework/FullscreenUI.h
 	Framework/ParticleParameter.cpp
 	Framework/ParticleParameter.h
+
+	# Crash Handler
+	Framework/CrashHandler.cpp
+	Framework/CrashHandler.h
 )
 
 #define the test files.
