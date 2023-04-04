@@ -852,10 +852,6 @@ static void Run()
 
 	RunMainLoop();
 
-	std::vector<int> a(1);
-
-	a[2] = 10;
-
 	Profiler::Exit();
 }
 
