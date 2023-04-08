@@ -11,6 +11,10 @@
 - Before the main loop of program, it should call `Profiler::Init()` and `Profiler::Start()`. After main loop of program, it should call `Profiler::Exit()` to print `ProfileReport.csv` file. It is able to modify number of sampling time at `Profiler-mswin.cpp` with modifing `MAXSAMPLENUM`.
 
 
+### Sample Output
+![](images/SampleOutput.png)
+
+
 </br>  
 
 * * * * * 
